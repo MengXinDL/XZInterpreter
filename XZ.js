@@ -14,10 +14,13 @@ class XZ {
     /**
      * @param {string} value
      */
-    set conmmand(value) {
-        if (!this.running) this._commands.push(value);
+    set command(value) {
+        if (!this.running){
+            for(const l of value.split('\n'))
+                this._commands.push(l);
+        }
     }
-    get conmmand() {
+    get command() {
         let o = '', s = 0;
         for (const cmd of this._commands) {
             if (cmd == 'over') s--;
@@ -93,7 +96,7 @@ class XZ {
                     }));
                     break;
                 case 'add':
-                    if (ivdarg(3,c,line))break;
+                    if (ivdarg(3,c))break;
                     let q = [judgeArg(c[1]), judgeArg(c[2]), judgeArg(c[3])];
                     if (q[0] % 2 || q[1] % 2 || q[2]) {
                         console.warn(
@@ -106,7 +109,7 @@ class XZ {
                     this.storages[c[3].slice(1)]=x+y;
                     break;
                 case 'mul':
-                    if (ivdarg(3,c,line))break;
+                    if (ivdarg(3,c))break;
                     let q1 = [judgeArg(c[1]), judgeArg(c[2]), judgeArg(c[3])];
                     if (q1[0] % 2 || q1[1] % 2 || q1[2]) {
                         console.warn(
@@ -119,7 +122,7 @@ class XZ {
                     this.storages[c[3].slice(1)]=x1*y1;
                     break;
                 case "create":
-                    if (ivdarg(1,c,line))break;
+                    if (ivdarg(1,c))break;
                     if (/[^a-zA-Z]/g.test(c[1])) {
                         console.warn(
                             Errors.InvalidArgumentError,
@@ -130,7 +133,7 @@ class XZ {
                     this.storages[c[1]] = 0;
                     break;
                 case "write":
-                    if (ivdarg(2,c,line))break;
+                    if (ivdarg(2,c))break;
                     if (judgeArg(c[2])) {
                         console.warn(
                             Errors.InvalidArgumentError,
@@ -146,6 +149,26 @@ class XZ {
                         break;
                     }
                     this.storages[c[2].slice(1)] = getstorage(c[1]);
+                    break;
+                case 'if':
+                    if (ivdarg(1,c))break;
+                    if (!getstorage(c[1])){
+                        line+=2;
+                        for(let k=1;k&&line!=this._commands.length;line++){
+                            if(this._commands[line].startsWith('start'))k++;
+                            if(this._commands[line].startsWith('over'))k--;
+                        }
+                    }
+                    break;
+                case 'ifnot':
+                    if (ivdarg(1,c))break;
+                    if (getstorage(c[1])){
+                        line+=2;
+                        for(let k=1;k&&line!=this._commands.length;line++){
+                            if(this._commands[line].startsWith('start'))k++;
+                            if(this._commands[line].startsWith('over'))k--;
+                        }
+                    }
                     break;
             }
         }
