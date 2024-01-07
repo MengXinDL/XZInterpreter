@@ -1,14 +1,18 @@
 const { XZ } = require('./XZ.js');
 
 const X=XZ.create();
-X.conmmand='start';
-X.conmmand='create a';
-X.conmmand='create b';
-X.conmmand='create c';
-X.conmmand='write 5.5 &a';
-X.conmmand='add &a -4 &b';
-X.conmmand='mul &a &b &c'
-X.conmmand='log &a &b &c'
-X.conmmand='over';
-console.log(X.conmmand);
+X.command=`start
+create a
+create b
+create c
+write 5.5 &a
+add &a -4 &b
+mul &a &b &c
+log &a &b &c
+ifnot &c
+start
+log 114514
+over
+over`;
+console.log(X.command);
 X.run();
