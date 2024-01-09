@@ -1,0 +1,14 @@
+{
+  "name": "xzinterpreter",
+  "version": "1.0.0",
+  "description": "萌新大佬开发\r 最初目的是弄得沙盒\r 然而沙盒总会被破解\r 所以搞了这个东西\r 之后将用于制作地图\r 非常基础\r 其中index.js是个例子，XZ.js是主体\r 这种“语言”借助javascript编写运行，而不是单独的文件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
